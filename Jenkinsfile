@@ -5,13 +5,14 @@ pipeline {
         maven 'local_maven' 
         jdk 'java21'
     }
+
     environment {
-       
         TOMCAT_URL = 'http://192.168.0.98:8080'
         APP_CONTEXT_PATH = '/jakarta-app'
+        TOMCAT_CREDS = credentials('tomcat-credentials')
         
     
-        TOMCAT_CREDS = credentials('tomcat-credentials')
+        WAR_FILE = 'target/jakartaee10-starter-boilerplate.war'
     }
 
     stages {
@@ -24,7 +25,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building on Windows...'
-             
                 bat 'mvn clean package -DskipTests'
             }
         }
@@ -34,12 +34,9 @@ pipeline {
                 script {
                     echo "Deploying to ${TOMCAT_URL}..."
                     
-                   
-                    def warFile = findFiles(glob: 'target/*.war')[0].path
                     
-                 
                     bat """
-                        curl -v -T "${warFile}" ^
+                        curl -v -T "${WAR_FILE}" ^
                         "${TOMCAT_URL}/manager/text/deploy?path=${APP_CONTEXT_PATH}&update=true" ^
                         --user "${TOMCAT_CREDS_USR}:${TOMCAT_CREDS_PSW}"
                     """
