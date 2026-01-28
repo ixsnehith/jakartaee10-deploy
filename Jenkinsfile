@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        TOMCAT_URL = 'http://192.168.0.98:8080'
+        TOMCAT_URL = 'http://localhost:8080/'
         APP_CONTEXT_PATH = '/jakarta-app'
         TOMCAT_CREDS = credentials('tomcat-credentials')
         
