@@ -2,10 +2,9 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.9'
-        jdk 'Java 21'
+        maven 'local_maven' 
+        jdk 'java21'
     }
-
     environment {
        
         TOMCAT_URL = 'http://192.168.0.98:8080'
