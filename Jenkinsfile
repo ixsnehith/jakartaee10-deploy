@@ -11,7 +11,6 @@ pipeline {
         APP_CONTEXT_PATH = '/jakarta-app'
         TOMCAT_CREDS = credentials('tomcat-credentials')
         
-    
         WAR_FILE = 'target/jakartaee10-starter-boilerplate.war'
     }
 
@@ -33,7 +32,6 @@ pipeline {
             steps {
                 script {
                     echo "Deploying to ${TOMCAT_URL}..."
-                    
                     
                     bat """
                         curl -v -T "${WAR_FILE}" ^
